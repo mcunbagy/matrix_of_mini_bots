@@ -1,6 +1,5 @@
 # matrix_of_mini_bots
 
-MATRIX OF MINIBOTS
 
 
 DESCRIPTION
