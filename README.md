@@ -1,6 +1,9 @@
 # matrix_of_mini_bots
 
-DESCRIPTION OF <MATRIX OF MINIBOTS>
+MATRIX OF MINIBOTS
+
+
+DESCRIPTION
 
   This project is about multiple tiny robots. They are to be followed by a camera
 placed well above to see each MiniBot.
