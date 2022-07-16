@@ -17,19 +17,15 @@ class RobotNode(Node):
         self.robot=[0.0,0.0,0.0,0.0,0.0]
         #create position list
         self.robots=[]
-
-        #Subscribe
-        self.subscription = self.create_subscription(Image,'/image',self.on_image_received,1)
-        self.subscription  # prevent unused variable warning
-        
-        #Publish
-        self.publisher_ = self.create_publisher(Twist, 'robotatt', 1)
-        timer_period = 0.01  # seconds
+        #Subscribe Playground Visual
+        self.create_subscription(Image,'/image',self.on_image_received,1)
+        #Publish Robot Attributes
+        self.publisher = self.create_publisher(Twist, 'robotatt', 1)
+        timer_period = 0.001  # seconds
         self.timer = self.create_timer(timer_period, self.pose_callback)
-        self.i = 0
+        
         
     def on_image_received(self, msg, num_of_rob=3):
-        
         img = np.array(msg.data).reshape((240, 320,3))
         frame=img
         # Coefficients Obtained by Camera Calibration
@@ -63,13 +59,18 @@ class RobotNode(Node):
                 y_sum = corners[i][0][0][1]+ corners[i][0][1][1]+ corners[i][0][2][1]+ corners[i][0][3][1]
                 x_centerPixel = x_sum*.25
                 y_centerPixel = y_sum*.25
-                # very simple very stupid yet  effective way to find the rotation
+                # image to 2D coordinates transformation
+                y_centerPixel = np.absolute(y_centerPixel-240)
+                # way to find the rotation
                 rhs_mid_x= (corners[i][0][1][0] + corners[i][0][2][0])*0.5
                 rhs_mid_y= (corners[i][0][1][1] + corners[i][0][2][1])*0.5
+                # need to transfrom mid_y to 2D Coordinates
+                rhs_mid_y= np.absolute(rhs_mid_y-240)
+                #calculate rotation angle
                 deltay=rhs_mid_y-y_centerPixel
                 deltax=rhs_mid_x-x_centerPixel
                 rot=np.arctan2(deltay, deltax) * 180 / np.pi
-                #no height change
+                #no depth change
                 z=float(0)
                 #print(ids)
                 if len(self.robots)<num_of_rob:
@@ -82,11 +83,24 @@ class RobotNode(Node):
                     elif ids[i][0] == 3:
                         self.robot= [x_centerPixel,y_centerPixel,z,float(3),rot]
                         self.robots.append(self.robot)
+                    elif ids[i][0] == 4:
+                        self.robot= [x_centerPixel,y_centerPixel,z,float(4),rot]
+                        self.robots.append(self.robot)
+                    elif ids[i][0] == 5:
+                        self.robot= [x_centerPixel,y_centerPixel,z,float(5),rot]
+                        self.robots.append(self.robot)
+                    elif ids[i][0] == 6:
+                        self.robot= [x_centerPixel,y_centerPixel,z,float(6),rot]
+                        self.robots.append(self.robot)
+                    elif ids[i][0] == 7:
+                        self.robot= [x_centerPixel,y_centerPixel,z,float(7),rot]
+                        self.robots.append(self.robot)
+                    elif ids[i][0] == 8:
+                        self.robot= [x_centerPixel,y_centerPixel,z,float(8),rot]
+                        self.robots.append(self.robot)
                 else:
                     self.robots=[]
-                
-
-                
+                                
         # Display the resulting frame
         cv2.imshow('frame', frame)
         # Wait 3 milisecoonds for an interaction. Check the key and do the corresponding job.
@@ -96,16 +110,16 @@ class RobotNode(Node):
             
     def pose_callback(self):
         robatt_msg = Twist()
-        # wist msg to publish 2d pose with robot id
+        # twist msg msg to publish 2d pose with robot id
         for k in self.robots:
             robatt_msg.linear.x = k[0]
             robatt_msg.linear.y = k[1]
             robatt_msg.linear.z = k[2]
             robatt_msg.angular.x = k[3] #robot id 
             robatt_msg.angular.z = k[4]
-            self.publisher_.publish(robatt_msg)
+            self.publisher.publish(robatt_msg)
             self.get_logger().info('Publishing: "%s"' % robatt_msg)
-            self.i += 1
+            
 
 def main(args=None):
     rclpy.init(args=args)

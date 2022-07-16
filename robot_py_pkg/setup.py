@@ -21,7 +21,10 @@ setup(
     entry_points={
         'console_scripts': [
                 "robotnode = robot_py_pkg.robotnode:main",
-                "terrainnode = robot_py_pkg.terrainnode:main"
+                "terrainnode = robot_py_pkg.terrainnode:main",
+                "gamenode=robot_py_pkg.gamenode:main",
+                "usersnode=robot_py_pkg.usersnode:main",
+                "runnode=robot_py_pkg.runnode:main"
         ],
     },
 )

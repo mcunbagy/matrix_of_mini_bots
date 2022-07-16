@@ -9,8 +9,9 @@
 
   <depend>rclpy</depend>
   <depend>sensor_msgs</depend>
-
-  
+  <depend>visualization_msgs</depend>
+  <depend>geometry_msgs.msg</depend>
+  <depend>diagnostic_msgs.msg</depend>  
   
 
   <test_depend>ament_copyright</test_depend>
