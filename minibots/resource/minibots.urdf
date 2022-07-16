@@ -1,15 +1,99 @@
 <?xml version="1.0" ?>
 <robot name="My robot">
     <webots>
-        <device reference="ds0" type="DistanceSensor">
+        <device reference="l1" type="Lidar">
             <ros>
-                <topicName>/left_sensor</topicName>
+                <topicName>/lidar_sensor1</topicName>
                 <alwaysOn>true</alwaysOn>
             </ros>
         </device>
-        <device reference="ds1" type="DistanceSensor">
+        <device reference="c1" type="Camera">
             <ros>
-                <topicName>/right_sensor</topicName>
+                <topicName>/camera_sensor1</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="l2" type="Lidar">
+            <ros>
+                <topicName>/lidar_sensor2</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="c2" type="Camera">
+            <ros>
+                <topicName>/camera_sensor2</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="l3" type="Lidar">
+            <ros>
+                <topicName>/lidar_sensor3</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="c3" type="Camera">
+            <ros>
+                <topicName>/camera_sensor3</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="l4" type="Lidar">
+            <ros>
+                <topicName>/lidar_sensor4</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="c4" type="Camera">
+            <ros>
+                <topicName>/camera_sensor4</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="l5" type="Lidar">
+            <ros>
+                <topicName>/lidar_sensor5</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="c5" type="Camera">
+            <ros>
+                <topicName>/camera_sensor5</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="l6" type="Lidar">
+            <ros>
+                <topicName>/lidar_sensor6</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="c6" type="Camera">
+            <ros>
+                <topicName>/camera_sensor6</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+                <device reference="l7" type="Lidar">
+            <ros>
+                <topicName>/lidar_sensor7</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="c7" type="Camera">
+            <ros>
+                <topicName>/camera_sensor7</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="l8" type="Lidar">
+            <ros>
+                <topicName>/lidar_sensor8</topicName>
+                <alwaysOn>true</alwaysOn>
+            </ros>
+        </device>
+        <device reference="c8" type="Camera">
+            <ros>
+                <topicName>/camera_sensor8</topicName>
                 <alwaysOn>true</alwaysOn>
             </ros>
         </device>

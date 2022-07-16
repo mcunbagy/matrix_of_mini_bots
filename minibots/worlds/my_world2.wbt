@@ -130,6 +130,118 @@ DEF ROB1 Robot {
   name "supervisor_controller"
 }
 
+DEF ROB2 Robot {
+  translation 1 1 0 
+  children [
+    Transform {
+      translation 0 0 0.04
+      children [
+       Solid{ 
+       children[
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 1
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {            
+            height 0.070
+            radius 0.080
+          }
+        }
+        
+        ]
+          boundingObject Transform {
+            translation 0 0 0
+            children [
+              Cylinder {            
+                height 0.070
+                radius 0.080
+              }
+            ]  
+          }
+          physics Physics {
+        }
+        }
+      ]
+    }
+    
+    DEF L2 Lidar {
+      translation 0.0 0 0.080
+      rotation 0 0 1 0
+      children [
+        DEF SENSOR Transform {
+          rotation 0 0 1 0
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.25 0.25 0.25
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.010
+                radius 0.080
+                
+              }
+            }
+          ]
+        }
+      ]
+      name "l2"
+      tiltAngle                 0.0
+      horizontalResolution      20
+      fieldOfView               1.5708
+      numberOfLayers            1
+      type                      "fixed"
+      minFrequency              10
+      maxFrequency              100
+      defaultFrequency          100
+    }
+    
+    DEF C2 Camera {
+      translation 0.0675 0 0.095
+      rotation 0 0 1 0
+      children [
+        DEF SENSOR Transform {
+          translation 0 0 0
+          rotation 0 0 1 0
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.01 0.01 0.01 
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 0.025 0.025 0.025             
+              }
+            }
+          ]
+        }
+      ]
+      name "c2"
+      fieldOfView               1.5708
+      width                     160 
+      height                    120           
+    }
+
+  ]
+  
+  boundingObject Transform {
+    translation 0 0 0.040
+    children [
+      USE BODY
+
+    ]
+    
+  }
+
+  controller "<extern>"
+  supervisor TRUE
+  name "supervisor_controller2"
+}
+
 DEF BOX1 Solid{ 
     translation 0.03 0.03 0.01
        children[

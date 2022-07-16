@@ -14,10 +14,18 @@ def generate_launch_description():
     robot_description = pathlib.Path(os.path.join(package_dir, 'resource', 'minibots.urdf')).read_text()
 
     webots = WebotsLauncher(
-        world=os.path.join(package_dir, 'worlds', 'my_world.wbt')
+        world=os.path.join(package_dir, 'worlds', 'my_world2.wbt')
     )
        
     supervisor = Node(
+        package='webots_ros2_driver',
+        executable='driver',
+        output='screen',
+        parameters=[
+            {'robot_description': robot_description},
+        ]
+    )
+    supervisor2 = Node(
         package='webots_ros2_driver',
         executable='driver',
         output='screen',
@@ -29,6 +37,7 @@ def generate_launch_description():
     return LaunchDescription([
         webots,
         supervisor,
+        supervisor2,
         launch.actions.RegisterEventHandler(
             event_handler=launch.event_handlers.OnProcessExit(
                 target_action=webots,
