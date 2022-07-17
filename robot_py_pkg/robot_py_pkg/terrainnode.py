@@ -18,7 +18,7 @@ from visualization_msgs.msg import Marker, MarkerArray
 class TerrainNode(Node):
     
     def __init__(self):
-        super().__init__('map')
+        super().__init__('terrainnode')
         timer_period = 0.01  # publishing period(sec)
         # real life centers
         self.__red_centers=[]
@@ -220,9 +220,9 @@ class TerrainNode(Node):
             cell_msg.id=int(self.__b[k][1])
             cell_msg.pose.position.x=float(self.__b[k][0][0])
             cell_msg.pose.position.y=float(self.__b[k][0][1])
-            cell_msg.color.r = 255.0
+            cell_msg.color.r = 0.0
             cell_msg.color.g = 0.0
-            cell_msg.color.b = 0.0
+            cell_msg.color.b = 255.0
             grid_msg.markers.append(cell_msg)
         for l in range(len(self.__y)):
             cell_msg=Marker()

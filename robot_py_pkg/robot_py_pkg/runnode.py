@@ -16,7 +16,7 @@ TCP_PORT1 = 5005
 TCP_PORT2 = 5006
 TCP_PORT3 = 5007
 TCP_PORT4 = 5008 #just a random port/may change..
-right_velocity = '-6.2'    # her zaman 1 basamaklı olacak  -----> (sayı)   #MAX:6.2
+right_velocity = '+6.2'    # her zaman 1 basamaklı olacak  -----> (sayı)   #MAX:6.2
 left_velocity = '+6.2'  # her zaman 4 basamaklı olacak  -----> (sayı)(.)(sayı)(sayı)
 
 # Create a socket object
@@ -100,7 +100,43 @@ class RunNode(Node):
                     self.y = 0
                     print('trying to read from server NOW ...')
                     try:
-                        input = s1.recv(1024).decode('utf-8')
+                        input = s2.recv(1024).decode('utf-8')
+                        print(input)
+                        print(type(input))
+                        if len(input)>2:
+                            input = ""
+                    except:
+                        print("non taken")
+            if self.__wheelvel.z == 1.0:
+                print('I am in')
+                s2.send('R'.encode('utf-8'))
+                s2.send(right_velocity.encode('utf-8'))
+                s2.send('L'.encode('utf-8'))
+                s2.send(left_velocity.encode('utf-8'))
+                s2.send('E'.encode('utf-8'))
+                if (self.y==10):
+                    self.y = 0
+                    print('trying to read from server NOW ...')
+                    try:
+                        input = s2.recv(1024).decode('utf-8')
+                        print(input)
+                        print(type(input))
+                        if len(input)>2:
+                            input = ""
+                    except:
+                        print("non taken")
+            if self.__wheelvel.z == 1.0:
+                print('I am in')
+                s3.send('R'.encode('utf-8'))
+                s3.send(right_velocity.encode('utf-8'))
+                s3.send('L'.encode('utf-8'))
+                s3.send(left_velocity.encode('utf-8'))
+                s3.send('E'.encode('utf-8'))
+                if (self.y==10):
+                    self.y = 0
+                    print('trying to read from server NOW ...')
+                    try:
+                        input = s3.recv(1024).decode('utf-8')
                         print(input)
                         print(type(input))
                         if len(input)>2:
