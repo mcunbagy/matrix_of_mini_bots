@@ -382,7 +382,6 @@ DEF BOX1 Solid {
 DEF BOX2 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {
@@ -394,7 +393,6 @@ DEF BOX2 Solid {
 DEF BOX3 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {
@@ -407,7 +405,6 @@ DEF BOX3 Solid {
 DEF BOX4 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {
@@ -420,7 +417,6 @@ DEF BOX4 Solid {
 DEF BOX5 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {
@@ -433,7 +429,6 @@ DEF BOX5 Solid {
 DEF BOX6 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {
@@ -446,7 +441,6 @@ DEF BOX6 Solid {
 DEF BOX7 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {
@@ -459,7 +453,6 @@ DEF BOX7 Solid {
 DEF BOX8 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {
@@ -472,7 +465,6 @@ DEF BOX8 Solid {
 DEF BOX9 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {
@@ -485,7 +477,6 @@ DEF BOX9 Solid {
 DEF BOX10 Solid {
   translation 50 50 50
   children [
-    DEF BOX Shape {
       USE BOX
   ]
   boundingObject Box {

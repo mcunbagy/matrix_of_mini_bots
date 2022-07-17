@@ -9,7 +9,7 @@ from visualization_msgs.msg import Marker, MarkerArray
 import webots_ros2_driver_webots
 sys.path.insert(1, os.path.dirname(webots_ros2_driver_webots.__file__))
 
-WORLD_FLAG=True
+
 
 class Supervisor():
     def init(self, webots_node, properties):
@@ -30,7 +30,12 @@ class Supervisor():
         #initialize right sensor msg
         self.__camera_sensor_value = Image()
         #initialize obstacles 
-        self.__obstacles=0
+        self.__box=0
+        self.__translationalBox=0
+        self.__sphere=0
+        self.__translationalSphere=0
+        self.__cylinder=0
+        self.__translationalCylinder=0
         self.__physics=0
         #subscribe robotnode and obtain robot pose and id
         self.__node.create_subscription(Twist, 'robotatt', self.__cmd_pose_callback, 10)
@@ -49,7 +54,7 @@ class Supervisor():
         self.userView_timer = self.__node.create_timer(timer_period, self.pov_callback)
         # publish lidar data to user
         self.publish_lidar = self.__node.create_publisher(LaserScan, 'lidarData', 10)
-        self.lidar_timer = self.__node.create_timer(timer_period, self.distance_callback)
+        self.lidar_timer = self.__node.create_timer(timer_period, self.__distance_callback)
         
         
     def __cmd_pose_callback(self, pose):        
@@ -62,57 +67,65 @@ class Supervisor():
         numofSphere=0
         numofCylinder=0
         for i in range(len(self.__obstacles.markers)):
-            obs_type=self.__obstacles[i].type
-            obs_x= self.__obstacles[i].pose.position.x
-            obs_y= self.__obstacles[i].pose.position.y
+            obs_type=self.__obstacles.markers[i].type
+            obs_x= self.__obstacles.markers[i].pose.position.x
+            obs_y= self.__obstacles.markers[i].pose.position.y
+            try:
             #box
-            if obs_type==1:
-                numofBox=numofBox+1
-                obj_def= 'BOX'+ str(numofBox)
-                self.__obstacles = self.__robot.getFromDef(obj_def)
-                self.__translation_field = self.__obstacles.getField('translation')
-                self.__physics = self.__obstacles.getField('physics')
-                loc=[obs_x,obs_y,0.04]
-                self.__translation_field.setSFVec3f(loc)
-                self.__physics.importSFNodeFromString('Physics {}')
-            #sphere    
-            elif obs_type==2:
-                numofSphere=numofSphere+1
-                obj_def= 'SPHERE'+ str(numofSphere)
-                self.__obstacles = self.__robot.getFromDef(obj_def)
-                self.__translation_field = self.__obstacles.getField('translation')
-                loc=[obs_x,obs_y,0.08]
-                self.__translation_field.setSFVec3f(loc)
-            #cylinder    
-            elif obs_type==3:
-                numofCylinder=numofCylinder+1
-                obj_def= 'CYLINDER'+ str(numofSphere)
-                self.__obstacles = self.__robot.getFromDef(obj_def)
-                self.__translation_field = self.__obstacles.getField('translation')
-                loc=[obs_x,obs_y,0.04]
-                self.__translation_field.setSFVec3f(loc)        
+                if obs_type==1:
+                    numofBox=numofBox+1
+                    obj_def= 'BOX'+ str(numofBox)
+                    self.__box = self.__robot.getFromDef(obj_def)
+                    self.__translationalBox = self.__box.getField('translation')
+                    #self.__physics = self.__box.getField('physics')
+                    loc=[obs_x,obs_y,0.08]
+                    self.__translationalBox.setSFVec3f(loc)
+                    #self.__physics.importSFNodeFromString('Physics {}')
+                #sphere    
+                elif obs_type==2:
+                    numofSphere=numofSphere+1
+                    obj_def= 'SPHERE'+ str(numofSphere)
+                    self.__sphere = self.__robot.getFromDef(obj_def)
+                    self.__translationalSphere = self.__sphere.getField('translation')
+                    #self.__physics = self.__sphere.getField('physics')
+                    loc=[obs_x,obs_y,0.08]
+                    self.__translationalSphere.setSFVec3f(loc)
+                    #self.__physics.importSFNodeFromString('Physics {}')
+                #cylinder    
+                elif obs_type==3:
+                    numofCylinder=numofCylinder+1
+                    obj_def= 'CYLINDER'+ str(numofCylinder)
+                    self.__cylinder = self.__robot.getFromDef(obj_def)
+                    self.__translationalCylinder = self.__cylinder.getField('translation')
+                    #self.__physics = self.__cylinder.getField('physics')
+                    loc=[obs_x,obs_y,0.04]
+                    self.__translationalCylinder.setSFVec3f(loc)
+                    #self.__physics.importSFNodeFromString('Physics {}')
+            except:
+                print('banana')
+                
         
     def __lidar_sensor_callback(self, lidar):
         self.__lidar_sensor_value = lidar
 
     def __camera_sensor_callback(self, message):
-        self.__camera_sensor_value = message.data
+        self.__camera_sensor_value = message
         
     def pov_callback(self):
-        rclpy.spin_once(self.__node, timeout_sec=0.00)
+        #rclpy.spin_once(self.__node, timeout_sec=0.00)
         cam=Image()        
         cam.data=self.__camera_sensor_value.data   #number of robots
         # Publish the info and logger            
         self.publish_pov.publish(cam)
-        self.__node.get_logger().info('Publishing: "%s"' % cam) 
+        #self.__node.get_logger().info('Publishing: "%s"' % cam) 
         
-    def dist_callback(self):
-        rclpy.spin_once(self.__node, timeout_sec=0.00)
+    def __distance_callback(self):
+        #rclpy.spin_once(self.__node, timeout_sec=0.00)
         dist=LaserScan()        
         dist=self.__lidar_sensor_value   #number of robots
         # Publish the info and logger            
         self.publish_lidar.publish(dist)
-        self.__node.get_logger().info('Publishing: "%s"' % dist)
+        #self.__node.get_logger().info('Publishing: "%s"' % dist)
     
     def step(self):
         rclpy.spin_once(self.__node, timeout_sec=0.00)
@@ -149,7 +162,7 @@ class Supervisor():
             self.__translation_field.setSFVec3f(inst_loc)
             self.__rotational_field.setSFRotation(inst_rot)
         elif rob_id==4:
-            self.__myrobot_node = self.__robot.getFromDef('BOX1')
+            self.__myrobot_node = self.__robot.getFromDef('ROB4')
             self.__translation_field = self.__myrobot_node.getField('translation')
             self.__rotational_field = self.__myrobot_node.getField('rotation')
             inst_loc=[x,y,z]
